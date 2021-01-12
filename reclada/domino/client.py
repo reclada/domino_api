@@ -7,6 +7,7 @@ from .base import DominoBase
 from .models.environments import EnvironmentList
 from .models.run import NewRun, Run, RunList, RunLogs
 from .models.search import SearchArea
+from .models.files import UploadResult
 
 
 def parse_timestamp(data):
@@ -66,8 +67,8 @@ class Domino(DominoBase):
         else:
             return response.content
 
-    def upload(self, user: str, project: str, path: str, data: bytes) -> Any:
-        return self._put(f"v1/projects/{user}/{project}/{path}", data=data)
+    def upload(self, user: str, project: str, path: str, data: bytes) -> UploadResult:
+        return self._put(f"v1/projects/{user}/{project}/{path}", data=data, model=UploadResult)
 
     # search
     def search(self, query: str, area: SearchArea) -> Any:
