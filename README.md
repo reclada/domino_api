@@ -1,7 +1,15 @@
-## Dominino data labs API client
+## Python client library for Domino API
 
-Example:
+This library permits interaction with a Domino deployment from Python using the [Domino API](https://dominodatalab.github.io/api-docs/)
 
+Domino API belongs to [Domino Data Lab](https://www.dominodatalab.com/)
+
+Install
+```bash
+pip install git+https://github.com/reclada/domino_api.git
+```
+
+Use:
 ```python
 from reclada.domino import Domino
 
