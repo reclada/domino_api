@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional, Type, TypeVar, overload
+from typing import Any, Dict, Optional, overload, Type, TypeVar
 
 from dataclass_factory import Factory
 from requests import RequestException, Session
