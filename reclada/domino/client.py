@@ -1,11 +1,11 @@
 from datetime import datetime
-from typing import List, Any
+from typing import Any, List
 
 from dataclass_factory import Factory, NameStyle, Schema
 
 from .base import DominoBase
 from .models.environments import EnvironmentList
-from .models.run import Run, RunList, NewRun, RunLogs
+from .models.run import NewRun, Run, RunList, RunLogs
 from .models.search import SearchArea
 
 
@@ -57,7 +57,7 @@ class Domino(DominoBase):
 
     # files
     def files(self, user: str, project: str, commit: str, path: str = ""):
-        return self._request(f"v1/projects/{user}/{project}/files/{commit}/{path}", "GET").json()
+        return self._request(f"v1/projects/{user}/{project}/files/{commit}/{path}", method="GET").json()
 
     def file(self, url, raw: bool = True):
         response = self._request(url, method="GET", stream=True)

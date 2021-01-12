@@ -1,4 +1,4 @@
-from typing import Optional, Any, Type, TypeVar, Dict
+from typing import Any, Dict, Optional, Type, TypeVar, overload
 
 from dataclass_factory import Factory
 from requests import RequestException, Session
@@ -26,10 +26,16 @@ class DominoBase:
     def _create_factory(self) -> Factory:
         return Factory(debug_path=True)
 
-    def _request(self, path: str, method: str,
-                 params: Optional[Dict[str, Any]] = None,
-                 json=None, data=None,
-                 stream=False, ):
+    def _request(
+            self,
+            path: str,
+            *,
+            method: str,
+            params: Optional[Dict[str, Any]] = None,
+            json=None,
+            data=None,
+            stream=False,
+    ):
         if not path.startswith("https://"):
             path = self.base_url + path
         try:
@@ -47,19 +53,49 @@ class DominoBase:
         except RequestException as e:
             raise DominoException from e
 
-    def _get(self, path: str, params: Optional[Dict[str, Any]] = None, model: Type[T] = Any) -> T:
+    @overload
+    def _get(self, path: str, *, params: Optional[Dict[str, Any]] = None) -> Any:
+        ...
+
+    @overload
+    def _get(self, path: str, *, model: Type[T], params: Optional[Dict[str, Any]] = None) -> T:
+        ...
+
+    def _get(self, path: str, *, model=Any, params: Optional[Dict[str, Any]] = None):
         return self.factory.load(
             self._request(path, method="GET", params=params).json(),
             model,
         )
 
-    def _post(self, path, params: Optional[Dict[str, Any]] = None, json=None, data=None, model: Type[T] = Any) -> T:
+    @overload
+    def _post(self, path, *,
+              params: Optional[Dict[str, Any]] = None, json=None, data=None) -> Any:
+        ...
+
+    @overload
+    def _post(self, path, *,
+              model: Type[T], params: Optional[Dict[str, Any]] = None, json=None, data=None) -> T:
+        ...
+
+    def _post(self, path, *,
+              model=Any, params: Optional[Dict[str, Any]] = None, json=None, data=None):
         return self.factory.load(
             self._request(path, method="POST", json=json, data=data, params=params).json(),
             model,
         )
 
-    def _put(self, path, params: Optional[Dict[str, Any]] = None, json=None, data=None, model: Type[T] = Any) -> T:
+    @overload
+    def _put(self, path, *,
+             params: Optional[Dict[str, Any]] = None, json=None, data=None) -> Any:
+        ...
+
+    @overload
+    def _put(self, path, *,
+             model: Type[T], params: Optional[Dict[str, Any]] = None, json=None, data=None) -> T:
+        ...
+
+    def _put(self, path, *,
+             model=Any, params: Optional[Dict[str, Any]] = None, json=None, data=None):
         return self.factory.load(
             self._request(path, method="PUT", json=json, data=data, params=params).json(),
             model,

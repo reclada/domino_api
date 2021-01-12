@@ -27,6 +27,7 @@ class NewRun:
     run_id: str
     message: str
 
+
 @dataclass
 class RunLogs:
     setup: str
