@@ -11,7 +11,7 @@ pip install git+https://github.com/reclada/domino_api.git
 
 Use:
 ```python
-from reclada.domino import Domino
+from reclada.devops.domino import Domino
 
 client = Domino(token="your api token", trial=True)
 client.start_run("username", "project", ["main.py"])

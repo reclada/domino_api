@@ -3,10 +3,10 @@
 from setuptools import setup
 
 setup(
-    name='reclada.domino',
+    name='reclada.devops.domino',
     description='Proper python bindings for the Domino API.',
     version='0.1',
-    packages=['reclada.domino'],
+    packages=['reclada.devops.domino'],
     install_requires=[
         'requests',
         'dataclass_factory==2.*',
