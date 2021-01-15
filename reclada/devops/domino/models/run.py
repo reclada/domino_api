@@ -5,6 +5,7 @@ from typing import Any, List, Optional
 
 
 class RunStatus(Enum):
+    PENDING = "Pending"
     QUEUED = "Queued"
     SCHEDULED = "Scheduled"
     PREPARING = "Preparing"
@@ -59,9 +60,9 @@ class Run:
     commit_id: str
     executor: Optional[str]
     output_commit_id: Optional[str]
-    title: str
+    title: Optional[str]
     is_archived: bool
-    post_processed_timestamp: datetime
+    post_processed_timestamp: Optional[datetime]
     diagnostic_statistics: Optional[DiagnosticStatistics]
     is_completed: bool
     hardware_tier_id: str
